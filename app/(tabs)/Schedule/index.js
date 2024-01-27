@@ -88,7 +88,7 @@ const index = () => {
     var formattedDate = formatDate(dateValue);
 
     getUserData(function (membership_type) {
-      fetch("http://10.0.2.2:3031/api/get-user-by-username", {
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -106,16 +106,19 @@ const index = () => {
     });
 
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-reservation-by-username-and-date", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: callback,
-          reservation_date: formattedDate,
-        }),
-      })
+      fetch(
+        "http://192.168.100.243:3031/api/get-reservation-by-username-and-date",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: callback,
+            reservation_date: formattedDate,
+          }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           setReservationData(data);

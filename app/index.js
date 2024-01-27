@@ -22,7 +22,9 @@ const Index = () => {
     //   !inAuthGroup
     // ) {
     //   // Redirect to the login page.
-    router.replace("/home");
+    // } else if (isLoggedIn) {
+    //   // go to tabs root.
+    router.replace("/login");
     // }
   }, [isLoggedIn, segments, navigationState?.key]);
 

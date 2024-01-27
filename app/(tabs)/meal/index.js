@@ -28,6 +28,9 @@ const Tab4Index = ({ disabled }) => {
   const [mealToday, setMealToday] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [ipAddress, setIpAdress] = useState("");
+  const [bmiMessage, setBmiMessage] = useState("");
+  const [classsificationColor, setClasssificationColor] = useState("");
+  const [bmiValue, setBmiValue] = useState("");
 
   const onRefresh = React.useCallback(() => {
     getIp();
@@ -93,7 +96,7 @@ const Tab4Index = ({ disabled }) => {
 
   useEffect(() => {
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/meal-plan", {
+      fetch("http://192.168.100.243:3031/api/meal-plan", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -114,8 +117,83 @@ const Tab4Index = ({ disabled }) => {
           setMealPlanning(meals);
           getterMealToday(meals);
         });
+
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          username: callback,
+        }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          for (let item of result) {
+            if (
+              (item.height != 0 && item.weight != 0) ||
+              (item.height != 0 && item.weight != 0)
+            ) {
+              calculateBmi(result[0].height, result[0].weight, result[0].age);
+            }
+          }
+        });
     });
   }, [refreshing]);
+
+  const calculateBmi = (height, weight, age) => {
+    if (height && weight) {
+      const heightInMeters = height / 100;
+      const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+      setBmiValue(bmi);
+
+      let classColor = "";
+      let bmiGet = "";
+      let message = "";
+      if (bmi < 16) {
+        message = "Severe Thinnes";
+        bmiGet = "<" + 16;
+        classColor = "#bc2020";
+      } else if (bmi >= 16 && bmi < 17) {
+        message = "Moderate Thinnes";
+        bmiGet = 16 + " to " + 17;
+        classColor = "#d38888";
+      } else if (bmi >= 17 && bmi < 18.5) {
+        bmiGet = 17 + " to " + 18.5;
+        message = "Mild Thinnes";
+        classColor = "#ffe400";
+      } else if (bmi >= 18.5 && bmi < 25) {
+        bmiGet = 18.5 + " to " + 25;
+        message = "Normal";
+        classColor = "#008137";
+      } else if (bmi >= 25 && bmi < 30) {
+        bmiGet = 25 + " to " + 30;
+        message = "Overweight";
+        classColor = "#ffe400";
+      } else if (age >= 21 && bmi >= 30 && bmi < 35) {
+        bmiGet = 30 + " to " + 35;
+        message = "Obeses Class I";
+        classColor = "#d38888";
+      } else if (age >= 21 && bmi >= 35 && bmi < 40) {
+        bmiGet = 35 + " to " + 40;
+        message = "Obeses Class II";
+        classColor = "#bc2020";
+      } else if (age >= 21 && bmi >= 40) {
+        bmiGet = ">" + 40;
+        message = "Obeses Class III";
+        classColor = "#8a0101";
+      } else {
+        bmiGet = 0;
+        message = "No data";
+        classColor = "black";
+      }
+      setBmiMessage(message);
+      setClasssificationColor(classColor);
+    } else {
+      setBmiValue("");
+      setBmiMessage("");
+    }
+  };
 
   const getData = async (callback) => {
     try {
@@ -164,6 +242,17 @@ const Tab4Index = ({ disabled }) => {
             elevation: 10,
           }}
         >
+          <Text
+            style={{
+              fontSize: 22,
+              fontFamily: "EncodeSansSemiCondensed_600SemiBold",
+              marginHorizontal: "3%",
+              color: "#444",
+              marginBottom: "2%",
+            }}
+          >
+            {bmiMessage}
+          </Text>
           <View
             style={{
               backgroundColor: "white",
@@ -440,10 +529,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     backgroundColor: "red",
     width: "70%",
-    // textAlign:'right',
   },
   linkcontainer: {
-    // backgroundColor: "#fff",
     width: "95%",
     flexDirection: "row",
     borderColor: "grey",

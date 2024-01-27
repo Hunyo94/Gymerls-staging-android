@@ -47,7 +47,7 @@ const Tab2Index = () => {
 
   const userLogOff = (username) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -66,7 +66,7 @@ const Tab2Index = () => {
 
   const userLoveChangePassSuccess = (username) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -134,7 +134,7 @@ const Tab2Index = () => {
       if (currentPassword === newPassword) {
         alert("New password must not be same as your old password");
       } else if (newPassword.length >= 6) {
-        fetch("http://10.0.2.2:3031/api/update-password", {
+        fetch("http://192.168.100.243:3031/api/update-password", {
           method: "PATCH",
           headers: {
             "Content-type": "application/json",

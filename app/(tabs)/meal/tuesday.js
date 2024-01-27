@@ -21,7 +21,7 @@ const Tab4Index = () => {
       router.push("/(tabs)/meal/tuesday");
     }, 100);
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/meal-plan", {
+      fetch("http://192.168.100.243:3031/api/meal-plan", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

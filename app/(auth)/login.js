@@ -59,7 +59,7 @@ export default function LogIn() {
 
   const userLog = (username, event) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -78,7 +78,7 @@ export default function LogIn() {
 
   const loginUser = () => {
     // GET METHOD
-    // fetch('http://10.0.2.2:3031/api/users')
+    // fetch('http://192.168.100.243:3031/api/users')
     // .then(function(response){
     //     return response.json();
     // })
@@ -89,8 +89,7 @@ export default function LogIn() {
     // POST METHOD
 
     // const usernameInput = username;
-    console.log("TAe");
-    fetch("http://10.0.2.2:3031/api/get-user", {
+    fetch("http://192.168.100.243:3031/api/get-user", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -104,7 +103,6 @@ export default function LogIn() {
         return response.json();
       })
       .then(function (userData) {
-        console.log(userData);
         if (userData.length === 0) {
           setShowAuth(true);
           userLog(username, "failed");
@@ -124,7 +122,7 @@ export default function LogIn() {
   };
 
   useEffect(() => {
-    fetch("http://10.0.2.2:3031/api/get-user", {
+    fetch("http://192.168.100.243:3031/api/get-user", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -137,7 +135,9 @@ export default function LogIn() {
       .then(function (response) {
         return response.json();
       })
-      .then(function (userData) {});
+      .then(function (userData) {
+        console.log(userData);
+      });
   }, []);
 
   const formatDateWithTime = (date) => {

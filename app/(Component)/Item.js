@@ -59,7 +59,7 @@ const Item = () => {
 
   const userLog = (username, event) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -78,7 +78,7 @@ const Item = () => {
 
   useEffect(() => {
     // GET METHOD
-    fetch("http://10.0.2.2:3031/api/products")
+    fetch("http://192.168.100.243:3031/api/products")
       .then(function (response) {
         return response.json();
       })
@@ -87,7 +87,7 @@ const Item = () => {
       });
 
     storeDataUser(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-cart-by-id", {
+      fetch("http://192.168.100.243:3031/api/get-cart-by-id", {
         method: "POST",
         headers: {
           "Content-type": " application/json",
@@ -112,7 +112,7 @@ const Item = () => {
   const addToCart = (product_name, image_url, description, price, id) => {
     const addedDate = formatDate(new Date());
     if (id === id) {
-      fetch("http://10.0.2.2:3031/api/add-to-cart", {
+      fetch("http://192.168.100.243:3031/api/add-to-cart", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

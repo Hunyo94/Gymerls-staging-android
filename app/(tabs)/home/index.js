@@ -63,7 +63,7 @@ const Tab1Index = () => {
 
   useEffect(() => {
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/meal-plan", {
+      fetch("http://192.168.100.243:3031/api/meal-plan", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -83,7 +83,7 @@ const Tab1Index = () => {
 
   useEffect(() => {
     getDataByEnd(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-user-by-username", {
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -106,16 +106,19 @@ const Tab1Index = () => {
 
     const formattedDate = formatDate(new Date());
     getDataSchedules(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-reservation-by-username-and-date", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: callback,
-          reservation_date: formattedDate,
-        }),
-      })
+      fetch(
+        "http://192.168.100.243:3031/api/get-reservation-by-username-and-date",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: callback,
+            reservation_date: formattedDate,
+          }),
+        }
+      )
         .then((res) => res.json())
         .then((result) => {
           setNewReservationData(result);
@@ -160,7 +163,7 @@ const Tab1Index = () => {
   const [showAnnouncement, setShowAnnouncements] = useState(false);
   const [announcements, setAnnouncements] = useState([]);
   const getAnnouncement = () => {
-    fetch("http://10.0.2.2:3031/api/get-all-announcement", {
+    fetch("http://192.168.100.243:3031/api/get-all-announcement", {
       method: "GET",
       headers: {
         "Content-type": "application/json",

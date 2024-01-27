@@ -24,6 +24,7 @@ export default function profile() {
   const [username, setUsername] = useState("");
   const [show, setShow] = useState("");
   const isPresented = navigation.canGoBack();
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     {
@@ -34,7 +35,7 @@ export default function profile() {
       }, 600);
     }
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-user-by-username", {
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -48,6 +49,12 @@ export default function profile() {
         })
         .then(function (personinfo) {
           setPersonInfo(personinfo);
+          const pesoFormat = new Intl.NumberFormat("fil-PH", {
+            style: "currency",
+            currency: "PHP",
+          }).format(personinfo[0].price);
+
+          setPrice(pesoFormat);
         });
     });
   }, []);
@@ -190,6 +197,8 @@ export default function profile() {
                   <Text style={styles.title}>Membership</Text>
                   <Text style={styles.label}>Type</Text>
                   <Text style={styles.text}>{personinfo.membership_type}</Text>
+                  <Text style={styles.label}>Price</Text>
+                  <Text style={styles.text}>{price}</Text>
                   <Text style={styles.label}>Start date</Text>
                   <Text style={styles.text}>
                     {personinfo.mem_start_date.slice(0, 10)}

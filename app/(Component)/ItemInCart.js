@@ -45,7 +45,7 @@ const ItemInCart = ({
     storeDataUser();
 
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-cart-by-id", {
+      fetch("http://192.168.100.243:3031/api/get-cart-by-id", {
         method: "POST",
         headers: {
           "Content-type": " application/json",

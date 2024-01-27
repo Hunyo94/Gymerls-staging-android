@@ -79,7 +79,7 @@ const Scheduleindex = () => {
   };
   const userLogReservation = (username) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -98,18 +98,21 @@ const Scheduleindex = () => {
 
   useEffect(() => {
     var formattedDate = formatDate(dateValue);
-
+    handleMonths();
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-reservation-by-username-and-date", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: callback,
-          reservation_date: formattedDate,
-        }),
-      })
+      fetch(
+        "http://192.168.100.243:3031/api/get-reservation-by-username-and-date",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: callback,
+            reservation_date: formattedDate,
+          }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (filterStatus === "All") {
@@ -121,7 +124,7 @@ const Scheduleindex = () => {
           setReservationData(data);
         });
     });
-  }, [refreshing, reservationData]);
+  }, [refreshing]);
 
   const handleOpenModalCreateReservation = () => {
     getReservationByDate(inputDate);
@@ -145,11 +148,13 @@ const Scheduleindex = () => {
     const selectedDay = selectDayFormat(inputDate);
     const selectedYear = selectYearFormat(inputDate);
 
+    console.log(selectedTime);
+    console.log(timeNow);
     if (selectedYear >= currentYear) {
       if (selectedMonth >= currentMonth) {
         if (selectedDay == currentDay) {
           if (selectedTime >= timeNow) {
-            fetch("http://10.0.2.2:3031/api/create-reservation", {
+            fetch("http://192.168.100.243:3031/api/create-reservation", {
               method: "POST",
               headers: {
                 "Content-type": "application/json",
@@ -174,7 +179,7 @@ const Scheduleindex = () => {
             alert("Please select valid time");
           }
         } else if (selectedDay > currentDay) {
-          fetch("http://10.0.2.2:3031/api/create-reservation", {
+          fetch("http://192.168.100.243:3031/api/create-reservation", {
             method: "POST",
             headers: {
               "Content-type": "application/json",
@@ -202,13 +207,12 @@ const Scheduleindex = () => {
     } else {
       alert("Please select valid date");
     }
-
   };
 
   const getReservationByDate = () => {
     var formattedDate = formatDate(inputDate);
     fetch(
-      "http://10.0.2.2:3031/api/get-reservation-by-date-and-status-is-confirmed",
+      "http://192.168.100.243:3031/api/get-reservation-by-date-and-status-is-confirmed",
       {
         method: "POST",
         headers: {
@@ -244,27 +248,27 @@ const Scheduleindex = () => {
           }
         }
 
-        first_batch.length === 10
+        first_batch.length === 3
           ? setFirstBatchIsDisabled(true)
           : setFirstBatchIsDisabled(false);
 
-        second_batch.length === 10
+        second_batch.length === 3
           ? setSecondBatchIsDisabled(true)
           : setSecondBatchIsDisabled(false);
 
-        third_batch.length === 10
+        third_batch.length === 3
           ? setThirdBatchIsDisabled(true)
           : setThirdBatchIsDisabled(false);
 
-        fourth_batch.length === 10
+        fourth_batch.length === 3
           ? setFourthBatchIsDisabled(true)
           : setFourthBatchIsDisabled(false);
 
-        fifth_batch.length === 10
+        fifth_batch.length === 3
           ? setFifthBatchIsDisabled(true)
           : setFifthBatchIsDisabled(false);
 
-        last_batch.length === 10
+        last_batch.length === 3
           ? setLastBatchIsDisabled(true)
           : setLastBatchIsDisabled(false);
       });
@@ -284,7 +288,10 @@ const Scheduleindex = () => {
     var minutes = currentDate.getMinutes();
     const timeNows = hours + (minutes < 10 ? "0" : "") + minutes;
 
-    let validTime = "";
+    // console.log(timeNows);
+    console.log(new Date());
+    console.log(currentDate.getMinutes());
+    let validTime = 0;
     if (timeNows >= 700 && timeNows < 900) {
       validTime = 1;
     } else if (timeNows >= 901 && timeNows < 1100) {
@@ -300,6 +307,7 @@ const Scheduleindex = () => {
     } else if (timeNows >= 1901 && timeNows < 2359) {
       validTime = 6;
     }
+    console.log(validTime);
     setTimeNow(validTime);
   };
 

@@ -49,7 +49,7 @@ const Item = () => {
 
   const userLog = (username, event) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -68,7 +68,7 @@ const Item = () => {
   useEffect(() => {
     storeDataUser();
     // GET METHOD
-    fetch("http://10.0.2.2:3031/api/products")
+    fetch("http://192.168.100.243:3031/api/products")
       .then(function (response) {
         return response.json();
       })
@@ -80,7 +80,7 @@ const Item = () => {
   const addToCart = (product_name, image_url, description, price) => {
     const addedDate = formatDate(new Date());
 
-    fetch("http://10.0.2.2:3031/api/add-to-cart", {
+    fetch("http://192.168.100.243:3031/api/add-to-cart", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

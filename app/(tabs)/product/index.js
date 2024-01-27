@@ -78,7 +78,7 @@ const Tab5Index = () => {
   const userLogsOnPlaceOrder = (username) => {
     console.log(username);
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -97,7 +97,7 @@ const Tab5Index = () => {
 
   const userLogdelcart = (event) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://10.0.2.2:3031/api/insert-log", {
+      fetch("http://192.168.100.243:3031/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -141,7 +141,7 @@ const Tab5Index = () => {
 
   useEffect(() => {
     getDataPersonInfo(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-user-by-username", {
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -161,7 +161,7 @@ const Tab5Index = () => {
 
   useEffect(() => {
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-cart-by-id", {
+      fetch("http://192.168.100.243:3031/api/get-cart-by-id", {
         method: "POST",
         headers: {
           "Content-type": " application/json",
@@ -221,7 +221,7 @@ const Tab5Index = () => {
   };
 
   const deleteCartItemAfterCheckout = (id) => {
-    fetch("http://10.0.2.2:3031/api/delete-cart", {
+    fetch("http://192.168.100.243:3031/api/delete-cart", {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -255,7 +255,7 @@ const Tab5Index = () => {
     var replaceItem = newItem.replace(/"/g, " ");
     const transactionDate = formatDate(new Date());
 
-    fetch("http://10.0.2.2:3031/api/transaction", {
+    fetch("http://192.168.100.243:3031/api/transaction", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -339,7 +339,7 @@ const Tab5Index = () => {
             <>
               {cart.map((item) => {
                 const removeInCart = (product_name) => {
-                  fetch("http://10.0.2.2:3031/api/delete-cart", {
+                  fetch("http://192.168.100.243:3031/api/delete-cart", {
                     method: "PATCH",
                     headers: {
                       "Content-type": "application/json",

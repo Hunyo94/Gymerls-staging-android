@@ -34,7 +34,7 @@ const SideProfile = () => {
       }, 600);
     }
     getData(function (callback) {
-      fetch("http://10.0.2.2:3031/api/get-user-by-username", {
+      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

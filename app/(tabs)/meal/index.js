@@ -96,7 +96,7 @@ const Tab4Index = ({ disabled }) => {
 
   useEffect(() => {
     getData(function (callback) {
-      fetch("http://192.168.100.243:3031/api/meal-plan", {
+      fetch("https://gymerls-staging-server.vercel.app/api/meal-plan", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -118,15 +118,18 @@ const Tab4Index = ({ disabled }) => {
           getterMealToday(meals);
         });
 
-      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: callback,
-        }),
-      })
+      fetch(
+        "https://gymerls-staging-server.vercel.app/api/get-user-by-username",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: callback,
+          }),
+        }
+      )
         .then((res) => res.json())
         .then((result) => {
           for (let item of result) {

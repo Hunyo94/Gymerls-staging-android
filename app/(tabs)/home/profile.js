@@ -35,15 +35,18 @@ export default function profile() {
       }, 600);
     }
     getData(function (callback) {
-      fetch("http://192.168.100.243:3031/api/get-user-by-username", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: callback,
-        }),
-      })
+      fetch(
+        "https://gymerls-staging-server.vercel.app/api/get-user-by-username",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: callback,
+          }),
+        }
+      )
         .then(function (response) {
           return response.json();
         })

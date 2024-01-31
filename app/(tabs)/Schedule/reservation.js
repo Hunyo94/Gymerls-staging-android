@@ -79,7 +79,7 @@ const Scheduleindex = () => {
   };
   const userLogReservation = (username) => {
     getIpAddress(function (ipAddress) {
-      fetch("http://192.168.100.243:3031/api/insert-log", {
+      fetch("https://gymerls-staging-server.vercel.app/api/insert-log", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -101,7 +101,7 @@ const Scheduleindex = () => {
     handleMonths();
     getData(function (callback) {
       fetch(
-        "http://192.168.100.243:3031/api/get-reservation-by-username-and-date",
+        "https://gymerls-staging-server.vercel.app/api/get-reservation-by-username-and-date",
         {
           method: "POST",
           headers: {
@@ -154,7 +154,37 @@ const Scheduleindex = () => {
       if (selectedMonth >= currentMonth) {
         if (selectedDay == currentDay) {
           if (selectedTime >= timeNow) {
-            fetch("http://192.168.100.243:3031/api/create-reservation", {
+            fetch(
+              "https://gymerls-staging-server.vercel.app/api/create-reservation",
+              {
+                method: "POST",
+                headers: {
+                  "Content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  username: username,
+                  notes: notes,
+                  reservation_date: formatDate(inputDate),
+                  status: "Pending",
+                  time_slot: timeList,
+                  coach_name: coachName,
+                  added_date: formatDate(new Date()),
+                }),
+              }
+            )
+              .then((res) => res.json())
+              .then((result) => {
+                userLogReservation(username);
+                cancelFunctionSchedule();
+                alert("Create Reservation Complete");
+              });
+          } else {
+            alert("Please select valid time");
+          }
+        } else if (selectedDay > currentDay) {
+          fetch(
+            "https://gymerls-staging-server.vercel.app/api/create-reservation",
+            {
               method: "POST",
               headers: {
                 "Content-type": "application/json",
@@ -168,32 +198,8 @@ const Scheduleindex = () => {
                 coach_name: coachName,
                 added_date: formatDate(new Date()),
               }),
-            })
-              .then((res) => res.json())
-              .then((result) => {
-                userLogReservation(username);
-                cancelFunctionSchedule();
-                alert("Create Reservation Complete");
-              });
-          } else {
-            alert("Please select valid time");
-          }
-        } else if (selectedDay > currentDay) {
-          fetch("http://192.168.100.243:3031/api/create-reservation", {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              username: username,
-              notes: notes,
-              reservation_date: formatDate(inputDate),
-              status: "Pending",
-              time_slot: timeList,
-              coach_name: coachName,
-              added_date: formatDate(new Date()),
-            }),
-          })
+            }
+          )
             .then((res) => res.json())
             .then((result) => {
               userLogReservation(username);
@@ -212,7 +218,7 @@ const Scheduleindex = () => {
   const getReservationByDate = () => {
     var formattedDate = formatDate(inputDate);
     fetch(
-      "http://192.168.100.243:3031/api/get-reservation-by-date-and-status-is-confirmed",
+      "https://gymerls-staging-server.vercel.app/api/get-reservation-by-date-and-status-is-confirmed",
       {
         method: "POST",
         headers: {

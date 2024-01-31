@@ -24,7 +24,7 @@ const Tab4Index = () => {
     }, 100);
 
     getData(function (callback) {
-      fetch("http://192.168.100.243:3031/api/meal-plan", {
+      fetch("https://gymerls-staging-server.vercel.app/api/meal-plan", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
